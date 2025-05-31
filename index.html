@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <style>
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
+        body {
+            background-color: #0a0118;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .glow {
+            box-shadow: 0 0 40px rgba(149, 76, 233, 0.15);
+        }
+
+        .avatar-glow {
+            box-shadow: 0 0 80px rgba(149, 76, 233, 0.25);
+        }
+
+        .hero-section {
+            background: radial-gradient(circle at 50% 0%, rgba(149, 76, 233, 0.15) 0%, transparent 70%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #a855f7, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .project-card {
+            background: rgba(30, 20, 50, 0.5);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(149, 76, 233, 0.4);
+        }
+
+        .skill-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #a855f7, #7c3aed);
+            border-radius: 3px;
+        }
+
+        .contact-icon {
+            transition: all 0.3s ease;
+        }
+
+        .contact-icon:hover {
+            transform: translateY(-3px);
+            color: #a855f7;
+        }
+
+        .scroll-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: '#7c3aed', secondary: '#a855f7' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
+</head>
+
+<body class="min-h-screen">
+    <!-- Hero Section -->
+    <section class="hero-section scroll-section px-4 md:px-8 lg:px-16 relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex flex-col items-center text-center mb-16">
+                <div class="mb-3 text-sm text-gray-400">Hello, I Am <span class="text-purple-400">naexy</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold mb-6">A Developer Who <br />Judges a book<br /> by its <span
+                        class="text-purple-400">cover</span>...</h1>
+                <p class="text-gray-400 text-sm max-w-lg mb-8">
+                    Because if the cover isn't good, the design probably isn't either. And that's just sad.
+                </p>
+            </div>
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold mb-3">I'm a Software Engineer.|</h2>
+                <p class="text-gray-400 mb-2">Currently, I'm a Software Engineer at <span
+                        class="text-purple-400">@Freelance</span></p>
+                <div class="mt-6 max-w-2xl">
+                    <p class="text-gray-300 mb-4">
+                        A self-taught developer, functioning in the industry for 3+ years now.
+                        I make meaningful and delightful digital products that create an equilibrium
+                        between user needs and business goals.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Work Experience / Projects -->
+    <section class="px-4 md:px-8 lg:px-16 py-20">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold mb-8">Work Experience</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card rounded-xl p-6" style="background: rgba(149, 76, 233, 0.05);">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-900 bg-opacity-30 flex items-center justify-center">
+                            <i class="ri-code-line ri-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Nemesis</h3>
+                            <p class="text-gray-400 text-sm">External CS2 Cheat</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Developed a sophisticated enhancement tool for CS2 with advanced features like aimbot, ESP, and
+                        skin changer. Built with performance and security in mind.
+                    </p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">C++</span>
+                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">ImGui</span>
+                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Memory Management
+                        </span>
+                    </div>
+                    <button
+                        class="mt-4 px-4 py-2 bg-purple-800 hover:bg-purple-700 transition-colors rounded-button text-sm whitespace-nowrap">View
+                        Code</button>
+                </div>
+                <!-- Project 2 -->
+                <div class="project-card rounded-lg p-6 glow">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-purple-800 flex items-center justify-center">
+                            <i class="ri-gamepad-line ri-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Drift 36</h3>
+                            <p class="text-gray-400 text-sm">High-octane racing game</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Created an immersive car racing game focused on drift mechanics with realistic physics,
+                        customizable vehicles, and challenging tracks.
+                    </p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Roblox Studio</span>
+                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Blender</span>
+                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Lua</span>
+                    </div>
+                    <button
+                        class="mt-4 px-4 py-2 bg-purple-800 hover:bg-purple-700 transition-colors rounded-button text-sm whitespace-nowrap">Play
+                        Demo</button>
+                </div>
+
+                <div class="project-card rounded-lg p-6 glow">
+                    <div class="flex items-start gap-4 mb-4">
+                        <div class="w-12 h-12 rounded-lg bg-purple-800 flex items-center justify-center">
+                            <i class="ri-gamepad-line ri-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Drive Zone</h3>
+                            <p class="text-gray-400 text-sm">Realistic racing game</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        Created an immersive car racing game focused on drift mechanics with realistic physics,
+                        customizable vehicles, and challenging tracks.
+                    </p>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Unity</span>
+                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">C#</span>
+                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Blender</span>
+                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Substance Painter</span>
+                    </div>
+                    <button
+                        class="mt-4 px-4 py-2 bg-purple-800 hover:bg-purple-700 transition-colors rounded-button text-sm whitespace-nowrap">Play
+                        Demo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Skills Section -->
+    <section class="px-4 md:px-8 lg:px-16 py-20">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12">Technical Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">C++</span>
+                            <span class="text-gray-400">Advanced</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">C#</span>
+                            <span class="text-gray-400">Advanced</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">JavaScript</span>
+                            <span class="text-gray-400">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-6">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">Lua</span>
+                            <span class="text-gray-400">Intermediate</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 70%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-16">
+                <p class="text-center text-gray-300 mb-6">
+                    I'm currently looking to join a <span class="text-purple-400">cross-functional</span> team<br>
+                    that values improving people's lives through accessible design.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 mt-8">
+                    <div
+                        class="w-10 h-10 flex items-center justify-center bg-purple-900 bg-opacity-50 rounded-full contact-icon">
+                        <i class="ri-github-line ri-lg"></i>
+                    </div>
+                    <div
+                        class="w-10 h-10 flex items-center justify-center bg-purple-900 bg-opacity-50 rounded-full contact-icon">
+                        <i class="ri-linkedin-line ri-lg"></i>
+                    </div>
+                    <div
+                        class="w-10 h-10 flex items-center justify-center bg-purple-900 bg-opacity-50 rounded-full contact-icon">
+                        <i class="ri-twitter-x-line ri-lg"></i>
+                    </div>
+                    <div
+                        class="w-10 h-10 flex items-center justify-center bg-purple-900 bg-opacity-50 rounded-full contact-icon">
+                        <i class="ri-discord-line ri-lg"></i>
+                    </div>
+                    <div
+                        class="w-10 h-10 flex items-center justify-center bg-purple-900 bg-opacity-50 rounded-full contact-icon">
+                        <i class="ri-mail-line ri-lg"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script id="animation-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const projectCards = document.querySelectorAll('.project-card');
+            // Add subtle hover effect to project cards
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    this.classList.add('glow');
+                });
+                card.addEventListener('mouseleave', function () {
+                    this.classList.remove('glow');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
