@@ -1,287 +1,535 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer Portfolio</title>
+    <title>naexy | Game Developer</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:"#6366f1",secondary:'#4f46e5'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     <style>
-        :where([class^="ri-"])::before {
-            content: "\f3c2";
-        }
-
+        :where([class^="ri-"])::before { content: "\f3c2"; }
         body {
-            background-color: #0a0118;
-            color: #fff;
             font-family: 'Inter', sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
         }
-
-        .glow {
-            box-shadow: 0 0 40px rgba(149, 76, 233, 0.15);
-        }
-
-        .avatar-glow {
-            box-shadow: 0 0 80px rgba(149, 76, 233, 0.25);
-        }
-
-        .hero-section {
-            background: radial-gradient(circle at 50% 0%, rgba(149, 76, 233, 0.15) 0%, transparent 70%);
-        }
-
-        .gradient-text {
-            background: linear-gradient(90deg, #a855f7, #7c3aed);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .project-card {
-            background: rgba(30, 20, 50, 0.5);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 30px rgba(149, 76, 233, 0.4);
-        }
-
-        .skill-bar {
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
             overflow: hidden;
         }
-
-        .skill-progress {
+        .video-background::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, #a855f7, #7c3aed);
-            border-radius: 3px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
         }
-
-        .contact-icon {
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: twinkle 4s infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Snow Effect */
+        .snow {
+            position: absolute;
+            top: -10px;
+            color: white;
+            user-select: none;
+            pointer-events: none;
+            z-index: 5;
+            font-size: 14px;
+            animation: snow-fall linear infinite;
+        }
+        
+        @keyframes snow-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .volume-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 80px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+            border-radius: 10px;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .progress-bar {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            outline: none;
+            border-radius: 10px;
+        }
+        .progress-bar::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .profile-card {
+            background: rgba(11, 11, 11, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(155, 155, 155, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
-
-        .contact-icon:hover {
-            transform: translateY(-3px);
-            color: #a855f7;
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
         }
-
-        .scroll-section {
-            min-height: 100vh;
+        
+        .social-icon {
+            transition: all 0.2s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        .player-controls button {
+            transition: all 0.2s ease;
+        }
+        .player-controls button:hover {
+            transform: scale(1.1);
+        }
+        
+        .music-visualizer {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            align-items: end;
+            height: 20px;
+            gap: 2px;
+            margin-left: 8px;
+        }
+        
+        .bar {
+            width: 3px;
+            background: linear-gradient(to top, #6366f1, #a855f7);
+            border-radius: 2px;
+            animation: music-bar 1s ease-in-out infinite alternate;
+        }
+        
+        .bar:nth-child(1) { animation-delay: 0s; }
+        .bar:nth-child(2) { animation-delay: 0.1s; }
+        .bar:nth-child(3) { animation-delay: 0.2s; }
+        .bar:nth-child(4) { animation-delay: 0.3s; }
+        .bar:nth-child(5) { animation-delay: 0.4s; }
+        
+        @keyframes music-bar {
+            0% { height: 4px; }
+            100% { height: 16px; }
         }
     </style>
-    <script>tailwind.config = { theme: { extend: { colors: { primary: '#7c3aed', secondary: '#a855f7' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
 </head>
+<body class="flex items-center justify-center min-h-screen">
+    <!-- Snow Container -->
+    <div id="snow-container"></div>
+    
+    <div class="video-background">
+        <video id="background-video" class="absolute inset-0 w-full h-full object-cover" autoplay muted loop style="display: none;">
+            <source type="video/mp4">
+        </video>
+        <div id="background-image" class="absolute inset-0 bg-cover bg-center"></div>
+    </div>
+    
+    <!-- Stars -->
+    <div id="stars-container"></div>
+    
+    <!-- Volume Control -->
+    <div class="absolute top-6 left-6 flex items-center gap-3 z-10">
+        <div class="w-8 h-8 flex items-center justify-center text-white">
+            <i class="ri-volume-up-line ri-lg"></i>
+        </div>
+        <input type="range" class="volume-slider" min="0" max="100" value="50" id="volume-control">
+        <div class="music-visualizer" id="visualizer" style="display: none;">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
 
-<body class="min-h-screen">
-    <!-- Hero Section -->
-    <section class="hero-section scroll-section px-4 md:px-8 lg:px-16 relative">
-        <div class="max-w-4xl mx-auto">
-            <div class="flex flex-col items-center text-center mb-16">
-                <div class="mb-3 text-sm text-gray-400">Hello, I Am <span class="text-purple-400">naexy</span>
+    <!-- Main Content -->
+    <div class="relative z-10 w-full max-w-md">
+        <!-- Profile Card -->
+        <div class="profile-card rounded-lg p-8 flex flex-col items-center" id="profile-card">
+            <div class="relative">
+                <div class="w-24 h-24 rounded-full overflow-hidden mb-4">
+                    <img id="profile-image" alt="Profile" class="w-full h-full object-cover">
                 </div>
-                <h1 class="text-3xl md:text-4xl font-bold mb-6">A Developer Who <br />Judges a book<br /> by its <span
-                        class="text-purple-400">cover</span>...</h1>
-                <p class="text-gray-400 text-sm max-w-lg mb-8">
-                    Because if the cover isn't good, the design probably isn't either. And that's just sad.
-                </p>
             </div>
-            <div class="mb-16">
-                <h2 class="text-3xl font-bold mb-3">I'm a Software Engineer.|</h2>
-                <p class="text-gray-400 mb-2">Currently, I'm a Software Engineer at <span
-                        class="text-purple-400">@Freelance</span></p>
-                <div class="mt-6 max-w-2xl">
-                    <p class="text-gray-300 mb-4">
-                        A self-taught developer, functioning in the industry for 3+ years now.
-                        I make meaningful and delightful digital products that create an equilibrium
-                        between user needs and business goals.
-                    </p>
+            
+            <h1 class="text-2xl font-semibold text-white mb-1">naexy</h1>
+            <p class="text-gray-300 mb-6">game dev</p>
+            
+            <div class="flex gap-4 mb-6">
+                <a id="discord-link" class="social-icon w-10 h-10 flex items-center justify-center bg-indigo-600 rounded-full">
+                    <i class="ri-discord-fill ri-lg"></i>
+                </a>
+                <a id="youtube-link" class="social-icon w-10 h-10 flex items-center justify-center bg-red-600 rounded-full">
+                    <i class="ri-youtube-fill ri-lg"></i>
+                </a>
+                <a id="email-link" class="social-icon w-10 h-10 flex items-center justify-center bg-gray-600 rounded-full">
+                    <i class="ri-mail-fill ri-lg"></i>
+                </a>
+            </div>
+            
+            <div class="flex items-center text-gray-400 text-sm">
+                <div class="w-4 h-4 flex items-center justify-center mr-1">
+                    <i class="ri-eye-line"></i>
                 </div>
+                <span>3</span>
             </div>
         </div>
-    </section>
-    <!-- Work Experience / Projects -->
-    <section class="px-4 md:px-8 lg:px-16 py-20">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold mb-8">Work Experience</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Project 1 -->
-                <div class="project-card rounded-xl p-6" style="background: rgba(149, 76, 233, 0.05);">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-xl bg-purple-900 bg-opacity-30 flex items-center justify-center">
-                            <i class="ri-code-line ri-lg"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold">Nemesis</h3>
-                            <p class="text-gray-400 text-sm">External CS2 Cheat</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 mb-4">
-                        Developed a sophisticated enhancement tool for CS2 with advanced features like aimbot, ESP, and
-                        skin changer. Built with performance and security in mind.
-                    </p>
-                    <div class="flex gap-2">
-                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">C++</span>
-                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">ImGui</span>
-                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Memory Management
-                        </span>
-                    </div>
-                    <button
-                        class="mt-4 px-4 py-2 bg-purple-800 hover:bg-purple-700 transition-colors rounded-button text-sm whitespace-nowrap">View
-                        Code</button>
+        
+        <!-- Music Player -->
+        <div class="mt-6 rounded-lg p-4 backdrop-blur-sm profile-card">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded overflow-hidden flex-shrink-0">
+                    <img id="album-cover" alt="Album Cover" class="w-full h-full object-cover">
                 </div>
-                <!-- Project 2 -->
-                <div class="project-card rounded-lg p-6 glow">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-lg bg-purple-800 flex items-center justify-center">
-                            <i class="ri-gamepad-line ri-lg"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold">Drift 36</h3>
-                            <p class="text-gray-400 text-sm">High-octane racing game</p>
-                        </div>
+                <div class="flex-grow">
+                    <h3 class="text-white text-sm font-medium" id="song-title">Return Of The Tres</h3>
+                    <div class="flex justify-between text-xs text-gray-400 mt-1">
+                        <span id="current-time">0:16</span>
+                        <span id="total-time">4:14</span>
                     </div>
-                    <p class="text-gray-300 mb-4">
-                        Created an immersive car racing game focused on drift mechanics with realistic physics,
-                        customizable vehicles, and challenging tracks.
-                    </p>
-                    <div class="flex gap-2">
-                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Roblox Studio</span>
-                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Blender</span>
-                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Lua</span>
-                    </div>
-                    <button
-                        class="mt-4 px-4 py-2 bg-purple-800 hover:bg-purple-700 transition-colors rounded-button text-sm whitespace-nowrap">Play
-                        Demo</button>
                 </div>
+            </div>
+            
+            <input type="range" class="progress-bar mb-3" min="0" max="100" value="6" id="progress-bar">
+            
+            <div class="player-controls flex justify-center gap-6">
+                <button class="w-8 h-8 flex items-center justify-center text-white" id="prev-btn">
+                    <i class="ri-skip-back-line ri-lg"></i>
+                </button>
+                <button class="w-8 h-8 flex items-center justify-center text-white" id="play-pause-btn">
+                    <i class="ri-play-line ri-lg"></i>
+                </button>
+                <button class="w-8 h-8 flex items-center justify-center text-white" id="next-btn">
+                    <i class="ri-skip-forward-line ri-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
-                <div class="project-card rounded-lg p-6 glow">
-                    <div class="flex items-start gap-4 mb-4">
-                        <div class="w-12 h-12 rounded-lg bg-purple-800 flex items-center justify-center">
-                            <i class="ri-gamepad-line ri-lg"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold">Drive Zone</h3>
-                            <p class="text-gray-400 text-sm">Realistic racing game</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 mb-4">
-                        Created an immersive car racing game focused on drift mechanics with realistic physics,
-                        customizable vehicles, and challenging tracks.
-                    </p>
-                    <div class="flex gap-2">
-                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Unity</span>
-                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">C#</span>
-                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Blender</span>
-                        <span class="px-3 py-1 bg-purple-900 bg-opacity-50 rounded-full text-xs">Substance Painter</span>
-                    </div>
-                    <button
-                        class="mt-4 px-4 py-2 bg-purple-800 hover:bg-purple-700 transition-colors rounded-button text-sm whitespace-nowrap">Play
-                        Demo</button>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Skills Section -->
-    <section class="px-4 md:px-8 lg:px-16 py-20">
-        <div class="max-w-5xl mx-auto">
-            <h2 class="text-3xl font-bold mb-12">Technical Skills</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <div class="mb-6">
-                        <div class="flex justify-between mb-2">
-                            <span class="font-medium">C++</span>
-                            <span class="text-gray-400">Advanced</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 90%"></div>
-                        </div>
-                    </div>
-                    <div class="mb-6">
-                        <div class="flex justify-between mb-2">
-                            <span class="font-medium">C#</span>
-                            <span class="text-gray-400">Advanced</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 85%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="mb-6">
-                        <div class="flex justify-between mb-2">
-                            <span class="font-medium">JavaScript</span>
-                            <span class="text-gray-400">Intermediate</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 75%"></div>
-                        </div>
-                    </div>
-                    <div class="mb-6">
-                        <div class="flex justify-between mb-2">
-                            <span class="font-medium">Lua</span>
-                            <span class="text-gray-400">Intermediate</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-progress" style="width: 70%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-16">
-                <p class="text-center text-gray-300 mb-6">
-                    I'm currently looking to join a <span class="text-purple-400">cross-functional</span> team<br>
-                    that values improving people's lives through accessible design.
-                </p>
-                <div class="flex flex-wrap justify-center gap-4 mt-8">
-                    <div
-                        class="w-10 h-10 flex items-center justify-center bg-purple-900 bg-opacity-50 rounded-full contact-icon">
-                        <i class="ri-github-line ri-lg"></i>
-                    </div>
-                    <div
-                        class="w-10 h-10 flex items-center justify-center bg-purple-900 bg-opacity-50 rounded-full contact-icon">
-                        <i class="ri-linkedin-line ri-lg"></i>
-                    </div>
-                    <div
-                        class="w-10 h-10 flex items-center justify-center bg-purple-900 bg-opacity-50 rounded-full contact-icon">
-                        <i class="ri-twitter-x-line ri-lg"></i>
-                    </div>
-                    <div
-                        class="w-10 h-10 flex items-center justify-center bg-purple-900 bg-opacity-50 rounded-full contact-icon">
-                        <i class="ri-discord-line ri-lg"></i>
-                    </div>
-                    <div
-                        class="w-10 h-10 flex items-center justify-center bg-purple-900 bg-opacity-50 rounded-full contact-icon">
-                        <i class="ri-mail-line ri-lg"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <script id="animation-script">
-        document.addEventListener('DOMContentLoaded', function () {
-            const projectCards = document.querySelectorAll('.project-card');
-            // Add subtle hover effect to project cards
-            projectCards.forEach(card => {
-                card.addEventListener('mouseenter', function () {
-                    this.classList.add('glow');
-                });
-                card.addEventListener('mouseleave', function () {
-                    this.classList.remove('glow');
-                });
+    <!-- Hidden Audio Element -->
+    <audio id="audio-player" preload="auto"></audio>
+
+    <script id="config-variables">
+        // Konfigürasyon Değişkenleri
+        const CONFIG = {
+            // Görseller ve Video
+            media: {
+                backgroundType: 'video', // 'image' veya 'video'
+                backgroundVideo: 'videos/video.mp4',
+                backgroundImage: 'images/background.jpg', // video yoksa fallback
+                profileImage: 'images/profile.png',
+                albumCover: 'images/album_cover.png'
+            },
+            
+            // Sosyal Medya Bağlantıları
+            socialLinks: {
+                discord: 'https://discord.gg/your-server',
+                youtube: 'https://youtube.com/@your-channel',
+                email: 'kvannoss@gmail.com'
+            },
+            
+            // Müzik
+            music: {
+                songTitle: 'Return Of The Tres',
+                songUrl: 'songs/song.mp3',
+                duration: 254 // saniye cinsinden (4:14)
+            }
+        };
+    </script>
+
+    <script id="snow-effect">
+        function createSnowEffect() {
+            const snowContainer = document.getElementById('snow-container');
+            const snowflakes = ['❄', '❅', '❆'];
+            
+            function createSnowflake() {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snow');
+                snowflake.innerHTML = snowflakes[Math.floor(Math.random() * snowflakes.length)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+                snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+                snowflake.style.opacity = Math.random() * 0.8 + 0.2;
+                
+                snowContainer.appendChild(snowflake);
+                
+                setTimeout(() => {
+                    snowflake.remove();
+                }, 5000);
+            }
+            
+            setInterval(createSnowflake, 300);
+        }
+    </script>
+
+    <script id="3d-card-effect">
+        function init3DCardEffect() {
+            const card = document.getElementById('profile-card');
+            
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
             });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+            });
+        }
+    </script>
+
+<script id="audio-system">
+        let audioPlayer;
+        let isPlaying = false;
+        let currentTime = 0;
+        let userHasInteracted = false;
+        let autoPlayAttempted = false;
+        
+        function initAudioSystem() {
+            audioPlayer = document.getElementById('audio-player');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const volumeControl = document.getElementById('volume-control');
+            const visualizer = document.getElementById('visualizer');
+            
+            // Set audio source
+            audioPlayer.src = CONFIG.music.songUrl;
+            audioPlayer.volume = 0.5;
+            
+            // Auto-play denemesi (sessiz başlayıp ses açma)
+            attemptAutoPlay();
+            
+            // İlk kullanıcı etkileşimini yakala
+            document.addEventListener('click', handleFirstInteraction, { once: true });
+            document.addEventListener('keydown', handleFirstInteraction, { once: true });
+            
+            // Audio yüklendiğinde çalmaya çalış
+            audioPlayer.addEventListener('canplaythrough', () => {
+                if (!autoPlayAttempted) {
+                    attemptAutoPlay();
+                }
+            });
+            
+            // Play/Pause functionality
+            playPauseBtn.addEventListener('click', () => {
+                userHasInteracted = true;
+                if (isPlaying) {
+                    pauseAudio();
+                } else {
+                    playAudio();
+                }
+            });
+            
+            // Volume control
+            volumeControl.addEventListener('input', (e) => {
+                audioPlayer.volume = e.target.value / 100;
+            });
+            
+            // Progress bar
+            audioPlayer.addEventListener('timeupdate', () => {
+                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                progressBar.value = progress;
+                updateTimeDisplay(audioPlayer.currentTime);
+            });
+            
+            progressBar.addEventListener('input', (e) => {
+                const time = (e.target.value / 100) * audioPlayer.duration;
+                audioPlayer.currentTime = time;
+            });
+            
+            // Next/Previous buttons
+            document.getElementById('next-btn').addEventListener('click', () => {
+                // Next song logic
+                console.log('Next song');
+            });
+            
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                // Previous song logic
+                console.log('Previous song');
+            });
+        }
+        
+        function attemptAutoPlay() {
+            autoPlayAttempted = true;
+            // Sessiz başlat
+            audioPlayer.muted = true;
+            
+            audioPlayer.play().then(() => {
+                // Başarılı olursa sesi aç
+                setTimeout(() => {
+                    audioPlayer.muted = false;
+                    playAudio();
+                }, 500);
+            }).catch(e => {
+                console.log('Auto-play başarısız, kullanıcı etkileşimi bekleniyor:', e);
+                // Auto-play başarısız, kullanıcı etkileşimi bekle
+            });
+        }
+        
+        function handleFirstInteraction() {
+            userHasInteracted = true;
+            if (!isPlaying) {
+                playAudio();
+            }
+        }
+        
+        function playAudio() {
+            audioPlayer.muted = false;
+            audioPlayer.play().then(() => {
+                document.getElementById('play-pause-btn').innerHTML = '<i class="ri-pause-line ri-lg"></i>';
+                document.getElementById('visualizer').style.display = 'flex';
+                isPlaying = true;
+            }).catch(e => {
+                console.log('Audio play failed:', e);
+                // Fallback için görsel efekt
+                document.getElementById('play-pause-btn').innerHTML = '<i class="ri-pause-line ri-lg"></i>';
+                document.getElementById('visualizer').style.display = 'flex';
+                isPlaying = true;
+                simulateAudioProgress();
+            });
+        }
+        
+        function pauseAudio() {
+            audioPlayer.pause();
+            document.getElementById('play-pause-btn').innerHTML = '<i class="ri-play-line ri-lg"></i>';
+            document.getElementById('visualizer').style.display = 'none';
+            isPlaying = false;
+        }
+    </script>
+
+    <script id="stars-animation">
+        function createStarsAnimation() {
+            const starsContainer = document.getElementById('stars-container');
+            const starsCount = 20;
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const size = Math.random() * 3 + 1;
+                const delay = Math.random() * 4;
+                
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+    </script>
+
+    <script id="initialization">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Medya yükleme (Video veya Image)
+            const backgroundVideo = document.getElementById('background-video');
+            const backgroundImage = document.getElementById('background-image');
+            
+            if (CONFIG.media.backgroundType === 'video') {
+                // Video yükle
+                backgroundVideo.querySelector('source').src = CONFIG.media.backgroundVideo;
+                backgroundVideo.load();
+                
+                backgroundVideo.addEventListener('canplay', () => {
+                    backgroundVideo.style.display = 'block';
+                    backgroundImage.style.display = 'none';
+                });
+                
+                backgroundVideo.addEventListener('error', () => {
+                    // Video yüklenemezse image fallback
+                    console.log('Video yüklenemedi, resim fallback kullanılıyor');
+                    backgroundVideo.style.display = 'none';
+                    backgroundImage.style.backgroundImage = `url('${CONFIG.media.backgroundImage}')`;
+                    backgroundImage.style.display = 'block';
+                });
+            } else {
+                // Sadece resim kullan
+                backgroundVideo.style.display = 'none';
+                backgroundImage.style.backgroundImage = `url('${CONFIG.media.backgroundImage}')`;
+                backgroundImage.style.display = 'block';
+            }
+            
+            // Diğer görselleri yükle
+            document.getElementById('profile-image').src = CONFIG.media.profileImage;
+            document.getElementById('album-cover').src = CONFIG.media.albumCover;
+            
+            // Sosyal medya linklerini ayarla
+            document.getElementById('discord-link').href = CONFIG.socialLinks.discord;
+            document.getElementById('youtube-link').href = CONFIG.socialLinks.youtube;
+            document.getElementById('email-link').href = CONFIG.socialLinks.email;
+            
+            // Şarkı bilgilerini ayarla
+            document.getElementById('song-title').textContent = CONFIG.music.songTitle;
+            
+            // Efektleri başlat
+            createSnowEffect();
+            createStarsAnimation();
+            init3DCardEffect();
+            initAudioSystem();
         });
     </script>
 </body>
-
 </html>
