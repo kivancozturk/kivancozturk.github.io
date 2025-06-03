@@ -338,124 +338,107 @@
         }
     </script>
 
-<script id="audio-system">
-        let audioPlayer;
-        let isPlaying = false;
-        let currentTime = 0;
-        let userHasInteracted = false;
-        let autoPlayAttempted = false;
-        
-        function initAudioSystem() {
-            audioPlayer = document.getElementById('audio-player');
-            const playPauseBtn = document.getElementById('play-pause-btn');
-            const progressBar = document.getElementById('progress-bar');
-            const volumeControl = document.getElementById('volume-control');
-            const visualizer = document.getElementById('visualizer');
-            
-            // Set audio source
-            audioPlayer.src = CONFIG.music.songUrl;
-            audioPlayer.volume = 0.5;
-            
-            // Auto-play denemesi (sessiz başlayıp ses açma)
-            attemptAutoPlay();
-            
-            // İlk kullanıcı etkileşimini yakala
-            document.addEventListener('click', handleFirstInteraction, { once: true });
-            document.addEventListener('keydown', handleFirstInteraction, { once: true });
-            
-            // Audio yüklendiğinde çalmaya çalış
-            audioPlayer.addEventListener('canplaythrough', () => {
-                if (!autoPlayAttempted) {
-                    attemptAutoPlay();
-                }
-            });
-            
-            // Play/Pause functionality
-            playPauseBtn.addEventListener('click', () => {
-                userHasInteracted = true;
-                if (isPlaying) {
-                    pauseAudio();
-                } else {
-                    playAudio();
-                }
-            });
-            
-            // Volume control
-            volumeControl.addEventListener('input', (e) => {
-                audioPlayer.volume = e.target.value / 100;
-            });
-            
-            // Progress bar
-            audioPlayer.addEventListener('timeupdate', () => {
-                const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-                progressBar.value = progress;
-                updateTimeDisplay(audioPlayer.currentTime);
-            });
-            
-            progressBar.addEventListener('input', (e) => {
-                const time = (e.target.value / 100) * audioPlayer.duration;
-                audioPlayer.currentTime = time;
-            });
-            
-            // Next/Previous buttons
-            document.getElementById('next-btn').addEventListener('click', () => {
-                // Next song logic
-                console.log('Next song');
-            });
-            
-            document.getElementById('prev-btn').addEventListener('click', () => {
-                // Previous song logic
-                console.log('Previous song');
-            });
-        }
-        
-        function attemptAutoPlay() {
-            autoPlayAttempted = true;
-            // Sessiz başlat
-            audioPlayer.muted = true;
-            
-            audioPlayer.play().then(() => {
-                // Başarılı olursa sesi aç
-                setTimeout(() => {
-                    audioPlayer.muted = false;
-                    playAudio();
-                }, 500);
-            }).catch(e => {
-                console.log('Auto-play başarısız, kullanıcı etkileşimi bekleniyor:', e);
-                // Auto-play başarısız, kullanıcı etkileşimi bekle
-            });
-        }
-        
-        function handleFirstInteraction() {
+   <script id="audio-system">
+    let audioPlayer;
+    let isPlaying = false;
+    let currentTime = 0;
+    let userHasInteracted = false;
+    let autoPlayAttempted = false;
+
+    function initAudioSystem() {
+        audioPlayer = document.getElementById('audio-player');
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const volumeControl = document.getElementById('volume-control');
+        const visualizer = document.getElementById('visualizer');
+
+        // Set audio source
+        audioPlayer.src = CONFIG.music.songUrl;
+        audioPlayer.volume = 0.5;
+
+        // Auto-play denemesi (sessiz başlayıp ses açma)
+        attemptAutoPlay();
+
+        // İlk kullanıcı etkileşimini yakala
+        document.addEventListener('click', handleFirstInteraction, { once: true });
+        document.addEventListener('keydown', handleFirstInteraction, { once: true });
+
+        // Audio yüklendiğinde çalmaya çalış
+        audioPlayer.addEventListener('canplaythrough', () => {
+            if (!autoPlayAttempted) {
+                attemptAutoPlay();
+            }
+        });
+
+        // Play/Pause button
+        playPauseBtn.addEventListener('click', () => {
             userHasInteracted = true;
-            if (!isPlaying) {
+            if (isPlaying) {
+                pauseAudio();
+            } else {
                 playAudio();
             }
-        }
-        
+        });
+
+        // Volume control
+        volumeControl.addEventListener('input', (e) => {
+            audioPlayer.volume = e.target.value / 100;
+        });
+
+        // Progress bar update
+        audioPlayer.addEventListener('timeupdate', () => {
+            const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            progressBar.value = progress;
+            document.getElementById('current-time').textContent = formatTime(audioPlayer.currentTime);
+        });
+
+        // Progress bar seek
+        progressBar.addEventListener('input', () => {
+            const seekTime = (progressBar.value / 100) * audioPlayer.duration;
+            audioPlayer.currentTime = seekTime;
+        });
+
         function playAudio() {
-            audioPlayer.muted = false;
-            audioPlayer.play().then(() => {
-                document.getElementById('play-pause-btn').innerHTML = '<i class="ri-pause-line ri-lg"></i>';
-                document.getElementById('visualizer').style.display = 'flex';
-                isPlaying = true;
-            }).catch(e => {
-                console.log('Audio play failed:', e);
-                // Fallback için görsel efekt
-                document.getElementById('play-pause-btn').innerHTML = '<i class="ri-pause-line ri-lg"></i>';
-                document.getElementById('visualizer').style.display = 'flex';
-                isPlaying = true;
-                simulateAudioProgress();
-            });
+            audioPlayer.play();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="ri-pause-line ri-lg"></i>';
+            visualizer.style.display = 'flex';
         }
-        
+
         function pauseAudio() {
             audioPlayer.pause();
-            document.getElementById('play-pause-btn').innerHTML = '<i class="ri-play-line ri-lg"></i>';
-            document.getElementById('visualizer').style.display = 'none';
             isPlaying = false;
+            playPauseBtn.innerHTML = '<i class="ri-play-line ri-lg"></i>';
+            visualizer.style.display = 'none';
         }
-    </script>
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function attemptAutoPlay() {
+            autoPlayAttempted = true;
+            audioPlayer.muted = true;
+            audioPlayer.play().then(() => {
+                audioPlayer.pause();
+                audioPlayer.currentTime = 0;
+                audioPlayer.muted = false;
+            }).catch(() => {
+                // Otomatik oynatma başarısız oldu
+            });
+        }
+
+        function handleFirstInteraction() {
+            userHasInteracted = true;
+            playAudio();
+        }
+    }
+
+    // Sayfa yüklendiğinde init fonksiyonunu çağır
+    window.addEventListener('DOMContentLoaded', initAudioSystem);
+</script>
 
     <script id="stars-animation">
         function createStarsAnimation() {
