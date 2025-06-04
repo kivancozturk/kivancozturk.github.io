@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>naexy | Game Developer</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>tailwind.config={theme:{extend:{colors:{primary:"#6366f1",secondary:'#4f46e5'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: "#6366f1", secondary: '#4f46e5' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -13,7 +14,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        :where([class^="ri-"])::before { content: "\f3c2"; }
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #000;
@@ -21,7 +25,7 @@
             overflow: hidden;
             height: 100vh;
         }
-        
+
         /* Intro Screen Styles */
         .intro-screen {
             position: fixed;
@@ -37,39 +41,49 @@
             cursor: pointer;
             transition: opacity 0.5s ease;
         }
-        
+
         .intro-text {
             position: absolute;
             top: 50%;
-            transform: translateY(-50%); /* dikey ortalama */
-            
+            transform: translateY(-50%);
+            /* dikey ortalama */
+
             font-size: 2rem;
             font-weight: bold;
             color: white;
             text-align: center;
             animation: pulse 2s ease-in-out infinite;
 
-            z-index: 1000; /* diğer öğelerin üstünde olsun */
-            pointer-events: none; /* tıklamayı engellemesin */
+            z-index: 1000;
+            /* diğer öğelerin üstünde olsun */
+            pointer-events: none;
+            /* tıklamayı engellemesin */
         }
 
-        
+
         @keyframes pulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.7;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
-        
+
         .main-content {
             opacity: 0;
             visibility: hidden;
             transition: all 0.5s ease;
         }
-        
+
         .main-content.active {
             opacity: 1;
             visibility: visible;
         }
-        
+
         .video-background {
             position: fixed;
             top: 0;
@@ -79,6 +93,7 @@
             z-index: -1;
             overflow: hidden;
         }
+
         .video-background::after {
             content: '';
             position: absolute;
@@ -89,6 +104,7 @@
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
         }
+
         .star {
             position: absolute;
             background-color: #fff;
@@ -96,11 +112,19 @@
             opacity: 0.6;
             animation: twinkle 4s infinite;
         }
+
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
-        
+
         /* Snow Effect */
         .snow {
             position: absolute;
@@ -112,18 +136,19 @@
             font-size: 14px;
             animation: snow-fall linear infinite;
         }
-        
+
         @keyframes snow-fall {
             0% {
                 transform: translateY(-100vh) rotate(0deg);
                 opacity: 0.8;
             }
+
             100% {
                 transform: translateY(100vh) rotate(360deg);
                 opacity: 0;
             }
         }
-        
+
         .volume-slider {
             -webkit-appearance: none;
             appearance: none;
@@ -133,6 +158,7 @@
             outline: none;
             border-radius: 10px;
         }
+
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -142,6 +168,7 @@
             border-radius: 50%;
             cursor: pointer;
         }
+
         .progress-bar {
             -webkit-appearance: none;
             appearance: none;
@@ -151,6 +178,7 @@
             outline: none;
             border-radius: 10px;
         }
+
         .progress-bar::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -160,11 +188,13 @@
             border-radius: 50%;
             cursor: pointer;
         }
+
         #card-group {
             transform-style: preserve-3d;
             transition: transform 0.3s ease;
             will-change: transform;
         }
+
         .profile-card {
             background: rgba(11, 11, 11, 0.9);
             backdrop-filter: blur(10px);
@@ -173,24 +203,27 @@
             transition: box-shadow 0.2s ease;
             perspective: 1000px;
         }
-        
+
         .profile-card:hover {
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
         }
-        
+
         .social-icon {
             transition: all 0.2s ease;
         }
+
         .social-icon:hover {
             transform: scale(1.1);
         }
+
         .player-controls button {
             transition: all 0.2s ease;
         }
+
         .player-controls button:hover {
             transform: scale(1.1);
         }
-        
+
         .music-visualizer {
             display: flex;
             align-items: end;
@@ -198,26 +231,64 @@
             gap: 2px;
             margin-left: 8px;
         }
-        
+
         .bar {
             width: 3px;
             background: linear-gradient(to top, #6366f1, #a855f7);
             border-radius: 2px;
             animation: music-bar 1s ease-in-out infinite alternate;
         }
-        
-        .bar:nth-child(1) { animation-delay: 0s; }
-        .bar:nth-child(2) { animation-delay: 0.1s; }
-        .bar:nth-child(3) { animation-delay: 0.2s; }
-        .bar:nth-child(4) { animation-delay: 0.3s; }
-        .bar:nth-child(5) { animation-delay: 0.4s; }
-        
+
+        .bar:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .bar:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .bar:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .bar:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .bar:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+
         @keyframes music-bar {
-            0% { height: 4px; }
-            100% { height: 16px; }
+            0% {
+                height: 4px;
+            }
+
+            100% {
+                height: 16px;
+            }
+        }
+
+        @keyframes softGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 4px 2px rgba(34, 197, 94, 0.5);
+                /* hafif glow */
+            }
+
+            50% {
+                box-shadow: 0 0 8px 4px rgba(34, 197, 94, 0.8);
+                /* biraz daha parlak */
+            }
+        }
+
+        .yanip-sonen-glow {
+            animation: softGlow 3s ease-in-out infinite;
         }
     </style>
 </head>
+
 <body>
     <!-- Intro Screen -->
     <div class="intro-screen" id="intro-screen">
@@ -229,17 +300,21 @@
     <div class="main-content" id="main-content">
         <!-- Snow Container -->
         <div id="snow-container"></div>
-        
+
+        <div class="cursor-follower" id="cursorFollower"></div>
+
+
         <div class="video-background">
-            <video id="background-video" class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline style="display: none;">
+            <video id="background-video" class="absolute inset-0 w-full h-full object-cover" autoplay muted loop
+                playsinline style="display: none;">
                 <source type="video/mp4">
             </video>
             <div id="background-image" class="absolute inset-0 bg-cover bg-center"></div>
         </div>
-        
+
         <!-- Stars -->
         <div id="stars-container"></div>
-        
+
         <!-- Volume Control -->
         <div class="absolute top-6 left-6 flex items-center gap-3 z-10">
             <div class="w-8 h-8 flex items-center justify-center text-white">
@@ -261,26 +336,40 @@
                 <!-- Profile Card -->
                 <div class="profile-card rounded-lg p-8 flex flex-col items-center" id="profile-card">
                     <div class="relative">
-                        <div class="w-24 h-24 rounded-full overflow-hidden mb-4">
-                            <img id="profile-image" alt="Profile" class="w-full h-full object-cover">
+                        <div class="w-28 h-28 rounded-full overflow-hidden mb-4">
+                            <img id="profile-image" alt="Profile" class="w-full h-full object-cover"
+                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face">
                         </div>
+                        <div
+                            class="absolute bottom-5 right-4 w-4 h-4 bg-green-500 rounded-full yanip-sonen-glow">
+                        </div>
+
                     </div>
-                    
-                    <h1 class="text-2xl font-semibold text-white mb-1">naexy</h1>
-                    <p class="text-gray-300 mb-6">game dev</p>
-                    
+
+                    <div class="relative inline-block">
+                        <img src="videos/sparkle.gif" class="absolute inset-0 w-full h-full object-cover z-0 rounded"
+                            alt="sparkle bg">
+                        <h1 class="relative text-2xl font-semibold text-white mb-1 z-10 px-2">naexy</h1>
+                    </div>
+
+                    <p id="typewriter" class="text-gray-300 mb-6 font-mono whitespace-pre"></p>
+
+
                     <div class="flex gap-4 mb-6">
-                        <a id="discord-link" class="social-icon w-10 h-10 flex items-center justify-center bg-indigo-600 rounded-full">
+                        <a id="discord-link"
+                            class="social-icon w-10 h-10 flex items-center justify-center bg-indigo-600 rounded-full">
                             <i class="ri-discord-fill ri-lg"></i>
                         </a>
-                        <a id="youtube-link" class="social-icon w-10 h-10 flex items-center justify-center bg-red-600 rounded-full">
+                        <a id="youtube-link"
+                            class="social-icon w-10 h-10 flex items-center justify-center bg-red-600 rounded-full">
                             <i class="ri-youtube-fill ri-lg"></i>
                         </a>
-                        <a id="email-link" class="social-icon w-10 h-10 flex items-center justify-center bg-gray-600 rounded-full">
+                        <a id="email-link"
+                            class="social-icon w-10 h-10 flex items-center justify-center bg-gray-600 rounded-full">
                             <i class="ri-mail-fill ri-lg"></i>
                         </a>
                     </div>
-                    
+
                     <div class="flex items-center text-gray-400 text-sm">
                         <div class="w-4 h-4 flex items-center justify-center mr-1">
                             <i class="ri-eye-line"></i>
@@ -288,9 +377,9 @@
                         <span>832</span>
                     </div>
                 </div>
-                
+
                 <!-- Music Player -->
-                <div class="mt-6 rounded-lg p-4 backdrop-blur-sm profile-card" >
+                <div class="mt-6 rounded-lg p-4 backdrop-blur-sm profile-card">
                     <div class="flex items-center gap-3 mb-3">
                         <div class="w-12 h-12 rounded overflow-hidden flex-shrink-0">
                             <img id="album-cover" alt="Album Cover" class="w-full h-full object-cover">
@@ -303,9 +392,9 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <input type="range" class="progress-bar mb-3" min="0" max="100" value="6" id="progress-bar">
-                    
+
                     <div class="player-controls flex justify-center gap-6">
                         <button class="w-8 h-8 flex items-center justify-center text-white" id="prev-btn">
                             <i class="ri-skip-back-line ri-lg"></i>
@@ -336,14 +425,14 @@
                 profileImage: 'images/profile.png',
                 albumCover: 'images/album_cover.png'
             },
-            
+
             // Sosyal Medya Bağlantıları
             socialLinks: {
                 discord: 'https://discord.gg/YXfN5rzHQU',
                 youtube: 'https://youtube.com/@AutoBloxGames',
                 email: 'kvannoss@gmail.com'
             },
-            
+
             // Müzik
             music: {
                 songTitle: 'California Dreamin',
@@ -357,8 +446,8 @@
         function initIntroScreen() {
             const introScreen = document.getElementById('intro-screen');
             const mainContent = document.getElementById('main-content');
-            
-            introScreen.addEventListener('click', function() {
+
+            introScreen.addEventListener('click', function () {
                 // Intro screen'i kaldır
                 introScreen.style.opacity = '0';
                 setTimeout(() => {
@@ -366,6 +455,7 @@
                     mainContent.classList.add('active');
                     // Sayfa yüklendikten sonra efektleri başlat
                     initializeMainContent();
+                    TypeeFFECT();
                     // Şarkıyı otomatik başlat
                     setTimeout(() => {
                         if (audioPlayer) {
@@ -375,9 +465,10 @@
                 }, 500);
             });
         }
-        
+
         function initializeMainContent() {
             // Efektleri başlat
+            animate();
             createSnowEffect();
             createStarsAnimation();
             init3DCardEffect();
@@ -386,11 +477,48 @@
         }
     </script>
 
+    <script id="type-effect">
+        function TypeeFFECT() {
+            const text = "game dev";
+            const el = document.getElementById("typewriter");
+            let i = 0;
+            let forward = true;
+            el.textContent = "|";
+
+            setTimeout(animate, 800);
+
+            function animate() {
+                el.textContent = text.slice(0, i) + "|";
+
+                if (forward) {
+                    if (i < text.length) {
+                        i++;
+                    } else {
+                        forward = false;
+                        setTimeout(animate, 800); // Bekleme süresi tam yazınca
+                        return;
+                    }
+                } else {
+                    if (i > 0) {
+                        i--;
+                    } else {
+                        forward = true;
+                        setTimeout(animate, 500); // Bekleme süresi silinince
+                        return;
+                    }
+                }
+
+                setTimeout(animate, 150); // Yazma/silme hızı
+            }
+        }
+    </script>
+
+
     <script id="snow-effect">
         function createSnowEffect() {
             const snowContainer = document.getElementById('snow-container');
             const snowflakes = ['❄', '❅', '❆'];
-            
+
             function createSnowflake() {
                 const snowflake = document.createElement('div');
                 snowflake.classList.add('snow');
@@ -399,14 +527,14 @@
                 snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
                 snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
                 snowflake.style.opacity = Math.random() * 0.8 + 0.2;
-                
+
                 snowContainer.appendChild(snowflake);
-                
+
                 setTimeout(() => {
                     snowflake.remove();
                 }, 5000);
             }
-            
+
             setInterval(createSnowflake, 300);
         }
     </script>
@@ -520,28 +648,56 @@
                 visualizer.style.display = 'none';
             }
         }
+
+        const cursorFollower = document.getElementById('cursorFollower');
+        let mouseX = 0;
+        let mouseY = 0;
+        let followerX = 0;
+        let followerY = 0;
+
+        // Mouse pozisyonunu takip et
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Yumuşak takip animasyonu
+        function animate() {
+            const speed = 0.08; // Takip hızı (0.1-0.3 arası ideal)
+            followerX += (mouseX - followerX) * speed;
+            followerY += (mouseY - followerY) * speed;
+
+            cursorFollower.style.left = followerX - 20 + 'px';
+            cursorFollower.style.top = followerY - 20 + 'px';
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+
     </script>
 
     <script id="stars-animation">
         function createStarsAnimation() {
             const starsContainer = document.getElementById('stars-container');
             const starsCount = 20;
-            
+
             for (let i = 0; i < starsCount; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
-                
+
                 const posX = Math.random() * 100;
                 const posY = Math.random() * 100;
                 const size = Math.random() * 3 + 1;
                 const delay = Math.random() * 4;
-                
+
                 star.style.left = `${posX}%`;
                 star.style.top = `${posY}%`;
                 star.style.width = `${size}px`;
                 star.style.height = `${size}px`;
                 star.style.animationDelay = `${delay}s`;
-                
+
                 starsContainer.appendChild(star);
             }
         }
@@ -552,18 +708,18 @@
             // Medya yükleme (Video veya Image)
             const backgroundVideo = document.getElementById('background-video');
             const backgroundImage = document.getElementById('background-image');
-            
+
             if (CONFIG.media.backgroundType === 'video') {
                 // Video yükle
                 backgroundVideo.querySelector('source').src = CONFIG.media.backgroundVideo;
                 backgroundVideo.load();
-                
+
                 backgroundVideo.addEventListener('loadeddata', () => {
                     backgroundVideo.style.display = 'block';
                     backgroundImage.style.display = 'none';
                     console.log('Video loaded successfully');
                 });
-                
+
                 backgroundVideo.addEventListener('error', (e) => {
                     // Video yüklenemezse image fallback
                     console.log('Video yüklenemedi, resim fallback kullanılıyor', e);
@@ -571,7 +727,7 @@
                     backgroundImage.style.backgroundImage = `url('${CONFIG.media.backgroundImage}')`;
                     backgroundImage.style.display = 'block';
                 });
-                
+
                 // Video otomatik başlatma denemesi
                 backgroundVideo.addEventListener('canplay', () => {
                     backgroundVideo.play().catch(e => {
@@ -584,26 +740,27 @@
                 backgroundImage.style.backgroundImage = `url('${CONFIG.media.backgroundImage}')`;
                 backgroundImage.style.display = 'block';
             }
-            
+
             // Diğer görselleri yükle
             document.getElementById('profile-image').src = CONFIG.media.profileImage;
             document.getElementById('album-cover').src = CONFIG.media.albumCover;
-            
+
             // Sosyal medya linklerini ayarla
             document.getElementById('discord-link').href = CONFIG.socialLinks.discord;
             document.getElementById('youtube-link').href = CONFIG.socialLinks.youtube;
             document.getElementById('email-link').href = CONFIG.socialLinks.email;
-            
+
             // Şarkı bilgilerini ayarla
             document.getElementById('song-title').textContent = CONFIG.music.songTitle;
         }
     </script>
 
     <script id="main-initialization">
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Intro screen'i başlat
             initIntroScreen();
         });
     </script>
 </body>
+
 </html>
