@@ -1,4 +1,6 @@
 {
+  "siteTitle": "naexy",
+  "favicon": "https://media.discordapp.net/attachments/1255692212717752513/1364102217426272356/white_crown.gif?ex=68431d70&is=6841cbf0&hm=8aaa7dac368937e0d8aa0b0d921a854b6765280d6cef4f83de2baa103912950e&=",
   "personal": {
     "name": "naexy",
     "description": "game dev",
@@ -33,5 +35,5 @@
     "viewCount": 852,
     "onlineStatus": false
   },
-  "profileLayout": "horizontal"
+  "profileLayout": "vertical"
 }
