@@ -4,25 +4,64 @@
   "personal": {
     "name": "naexy",
     "description": "game dev",
-    "introText": "click?"
+    "introText": "click?",
+    "location": {
+      "name": "Istanbul, Turkey"
+    }
   },
   "media": {
     "backgroundType": "video",
     "backgroundVideo": "videos/video.mp4",
     "backgroundImage": "images/background.jpg",
-    "profileImage": "images/profile.png",
+    "profileImage": "https://media.discordapp.net/attachments/1233881503923179572/1374886549594046565/IMG_1362.jpg?ex=6842cc21&is=68417aa1&hm=0c99ec7c65954201987e6ed69333661edcb4214dce637a3248cd7ce5f5d536bc&=&format=webp&width=652&height=815",
     "albumCover": "images/album_cover.png",
-    "bannerImage": "images/banner.gif"
+    "bannerImage": "images/banner.gif",
+    "profileDecoration": "images/decoration.png"
   },
-  "socialLinks": {
-    "discord": "https://discord.gg/YXfN5rzHQU",
-    "youtube": "https://youtube.com/@AutoBloxGames",
-    "email": "kvannoss@gmail.com"
-  },
+  "socialLinks": [
+    {
+      "name": "none",
+      "url": "none",
+      "photo": "https://media.discordapp.net/attachments/1255692212717752513/1370844483423436931/Spinning_star_thing.gif?ex=684340e9&is=6841ef69&hm=e15cd0754d128ed2adc7251d337187836f103361d3872e59b7e709eed4685656&="
+    },
+    {
+      "name": "youtube",
+      "url": "https://youtube.com/@AutoBloxGames",
+      "photo": "https://media.discordapp.net/attachments/1255692212717752513/1365287934751670376/youtube.png?ex=6842d079&is=68417ef9&hm=ab5cbc3ec2f98128aa9d2705d2ba9e16e8163062db62e77e3b6664a72d66eeea&=&format=webp&quality=lossless"
+    },
+    {
+      "name": "discord",
+      "url": "https://discord.gg/YXfN5rzHQU",
+      "photo": "https://media.discordapp.net/attachments/1255692212717752513/1365287936215482410/discord.png?ex=6842d079&is=68417ef9&hm=6c6c320be044ae871eba07c243bbfef9c777d8fdaa0306f9da08f2ef725e2979&=&format=webp&quality=lossless"
+    },
+    {
+      "name": "email",
+      "url": "mailto:kvannoss@gmail.com",
+      "photo": "https://media.discordapp.net/attachments/1255692212717752513/1365287936639373403/email.png?ex=6842d079&is=68417ef9&hm=0bae7ca903ce7bf1369a2e6f4a9f6cf0d8517757b3c05fc77a6131b563cd6159&=&format=webp&quality=lossless"
+    },
+    {
+      "name": "none",
+      "url": "none",
+      "photo": "https://media.discordapp.net/attachments/1255692212717752513/1370844483804991488/output-onlinegiftools.gif?ex=684340e9&is=6841ef69&hm=34df54989f647d02f398e81fd820226b41782e621f8b6852f03e246518c4816f&="
+    }
+  ],
+  "badges": [
+  { "photo": "https://cdn.discordapp.com/badge-icons/0d61871f72bb9a33a7ae568c1fb4f20a.png", "name": "Nitro" }
+  ],
   "music": {
     "songTitle": "California Dreamin",
     "songUrl": "songs/song.mp3",
     "duration": 154
+  },
+  "profileCardStyle": {
+    "color": "rgb(0,0,0)",
+    "opacity": 0.3,
+    "blur": 15
+  },
+  "musicPlayerStyle": {
+    "color": "rgb(0,0,0)",
+    "opacity": 0.3,
+    "blur": 15
   },
   "effects": {
     "snowEffect": true,
@@ -33,7 +72,7 @@
   },
   "ui": {
     "viewCount": 852,
-    "onlineStatus": false
+    "onlineStatus": true
   },
   "profileLayout": "vertical"
 }

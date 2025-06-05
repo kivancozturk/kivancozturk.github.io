@@ -357,6 +357,7 @@
                     <div class="relative">
                         <div class="w-28 h-28 rounded-full overflow-hidden mb-4 -4">
                             <img id="profile-image-vertical" alt="Profile" class="w-full h-full object-cover">
+                            <img id="profile-decoration-vertical" alt="Profile Decoration" class="absolute inset-0 w-full h-full object-cover pointer-events-none" style="display: none; top: -10px;" />
                         </div>
                         <div id="online-status-vertical"
                             class="absolute bottom-5 right-4 w-4 h-4 bg-green-500 rounded-full"></div>
@@ -368,60 +369,17 @@
                             class="relative text-2xl font-semibold text-white mb-1 z-10 px-2">naexy</h1>
                     </div>
                     <p id="typewriter-vertical" class="text-gray-300 mb-6 font-mono whitespace-pre"></p>
-                    <div class="flex gap-4 mb-6">
-                        <a id="discord-link-vertical"
-                            class="social-icon w-10 h-10 flex items-center justify-center bg-indigo-600 rounded-full"><i
-                                class="ri-discord-fill ri-lg"></i></a>
-                        <a id="youtube-link-vertical"
-                            class="social-icon w-10 h-10 flex items-center justify-center bg-red-600 rounded-full"><i
-                                class="ri-youtube-fill ri-lg"></i></a>
-                        <a id="email-link-vertical"
-                            class="social-icon w-10 h-10 flex items-center justify-center bg-gray-600 rounded-full"><i
-                                class="ri-mail-fill ri-lg"></i></a>
-                    </div>
-                    <div class="flex items-center text-gray-400 text-sm">
-                        <div class="w-4 h-4 flex items-center justify-center mr-1"><i class="ri-eye-line"></i></div>
-                        <span id="view-count-vertical">832</span>
-                    </div>
-                </div>
-
-
-                <div class="profile-card profile-card-horizontal rounded-lg pb-8 flex flex-col items-center mt-[-56px]"
-                    id="profile-card-horizontal">
-                    <div id="profile-banner"
-                        class="w-full h-28 md:h-36 rounded-t-lg overflow-hidden mb-[-56px] relative flex items-end justify-center"
-                        style="background: #222;">
-                        <img id="banner-image" src="images/banner.gif" alt="Banner"
-                            class="w-full h-full object-cover absolute inset-0 z-0" style="display: none;">
-                    </div>
-                    <div class="relative">
-                        <div class="w-28 h-28 rounded-full overflow-hidden mb-4 -4">
-                            <img id="profile-image-horizontal" alt="Profile" class="w-full h-full object-cover">
+                    <div id="badge-list" class="flex gap-2 mb-2"></div>
+                    <div class="flex gap-2 mb-6" id="social-links-vertical"></div>
+                    <div class="flex items-center gap-6 text-gray-400 text-sm pl-4">
+                        <div class="flex items-center gap-1" id="location-container-vertical">
+                            <i id="location-icon-vertical" class="ri-map-pin-line"></i>
+                            <span id="location-text-vertical">Istanbul, Turkey</span>
                         </div>
-                        <div id="online-status-horizontal"
-                            class="absolute bottom-5 right-4 w-4 h-4 bg-green-500 rounded-full"></div>
-                    </div>
-                    <div class="relative inline-block">
-                        <img src="videos/sparkle.gif" class="absolute inset-0 w-full h-full object-cover z-0 rounded"
-                            alt="sparkle bg">
-                        <h1 id="profile-name-horizontal"
-                            class="relative text-2xl font-semibold text-white mb-1 z-10 px-2">naexy</h1>
-                    </div>
-                    <p id="typewriter-horizontal" class="text-gray-300 mb-6 font-mono whitespace-pre"></p>
-                    <div class="flex gap-4 mb-6">
-                        <a id="discord-link-horizontal"
-                            class="social-icon w-10 h-10 flex items-center justify-center bg-indigo-600 rounded-full"><i
-                                class="ri-discord-fill ri-lg"></i></a>
-                        <a id="youtube-link-horizontal"
-                            class="social-icon w-10 h-10 flex items-center justify-center bg-red-600 rounded-full"><i
-                                class="ri-youtube-fill ri-lg"></i></a>
-                        <a id="email-link-horizontal"
-                            class="social-icon w-10 h-10 flex items-center justify-center bg-gray-600 rounded-full"><i
-                                class="ri-mail-fill ri-lg"></i></a>
-                    </div>
-                    <div class="flex items-center text-gray-400 text-sm">
-                        <div class="w-4 h-4 flex items-center justify-center mr-1"><i class="ri-eye-line"></i></div>
-                        <span id="view-count-horizontal">832</span>
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 flex items-center justify-center mr-1"><i class="ri-eye-line"></i></div>
+                            <span id="view-count-vertical">832</span>
+                        </div>
                     </div>
                 </div>
 
@@ -537,16 +495,23 @@
                 bannerImage.style.display = 'none';
             }
 
-            // Layout seçimi
-            const layout = CONFIG.profileLayout || 'vertical';
+            // Sadece vertical layout kullan
             const verticalCard = document.getElementById('profile-card-vertical');
-            const horizontalCard = document.getElementById('profile-card-horizontal');
-            if (layout === 'horizontal') {
-                verticalCard.classList.add('hidden');
-                horizontalCard.classList.remove('hidden');
-            } else {
-                verticalCard.classList.remove('hidden');
-                horizontalCard.classList.add('hidden');
+            verticalCard.classList.remove('hidden');
+
+            // Profile Card Style (background, opacity, blur)
+            if (CONFIG.profileCardStyle) {
+                const { color, opacity, blur } = CONFIG.profileCardStyle;
+                verticalCard.style.background = color ? color.replace('rgb', 'rgba').replace(')', `,${opacity ?? 1})`) : '';
+                verticalCard.style.backdropFilter = blur ? `blur(${blur}px)` : '';
+            }
+
+            // Music Player Style (background, opacity, blur)
+            const musicPlayer = document.querySelector('.profile-card.mt-6');
+            if (musicPlayer && CONFIG.musicPlayerStyle) {
+                const { color, opacity, blur } = CONFIG.musicPlayerStyle;
+                musicPlayer.style.background = color ? color.replace('rgb', 'rgba').replace(')', `,${opacity ?? 1})`) : '';
+                musicPlayer.style.backdropFilter = blur ? `blur(${blur}px)` : '';
             }
 
             // Vertical Card
@@ -561,41 +526,61 @@
                 onlineStatusVertical.style.backgroundColor = 'rgb(239 68 68)'; // kırmızı
                 onlineStatusVertical.classList.remove('glow-green');
             }
-            const emailLinkVertical = document.getElementById('email-link-vertical');
-            if (CONFIG.socialLinks.email.startsWith('mailto:')) {
-                emailLinkVertical.href = CONFIG.socialLinks.email;
-            } else {
-                emailLinkVertical.href = 'mailto:' + CONFIG.socialLinks.email;
-            }
-            document.getElementById('discord-link-vertical').href = CONFIG.socialLinks.discord;
-            document.getElementById('youtube-link-vertical').href = CONFIG.socialLinks.youtube;
             document.getElementById('profile-image-vertical').src = CONFIG.media.profileImage;
+            // Profile Decoration (vertical)
+            const profileDecoration = CONFIG.media.profileDecoration;
+            const decorationImg = document.getElementById('profile-decoration-vertical');
+            if (profileDecoration) {
+                decorationImg.src = profileDecoration;
+                decorationImg.style.display = 'block';
+            } else {
+                decorationImg.style.display = 'none';
+            }
 
-            // Horizontal Card
-            document.getElementById('profile-name-horizontal').textContent = CONFIG.personal.name;
-            document.getElementById('view-count-horizontal').textContent = CONFIG.ui.viewCount;
-            const onlineStatusHorizontal = document.getElementById('online-status-horizontal');
-            if (CONFIG.ui.onlineStatus) {
-                onlineStatusHorizontal.style.backgroundColor = 'rgb(34 197 94)';
-                onlineStatusHorizontal.classList.add('glow-green');
-                onlineStatusHorizontal.classList.remove('glow-red');
-            } else {
-                onlineStatusHorizontal.style.backgroundColor = 'rgb(239 68 68)';
-                onlineStatusHorizontal.classList.remove('glow-green');
-            }
-            const emailLinkHorizontal = document.getElementById('email-link-horizontal');
-            if (CONFIG.socialLinks.email.startsWith('mailto:')) {
-                emailLinkHorizontal.href = CONFIG.socialLinks.email;
-            } else {
-                emailLinkHorizontal.href = 'mailto:' + CONFIG.socialLinks.email;
-            }
-            document.getElementById('discord-link-horizontal').href = CONFIG.socialLinks.discord;
-            document.getElementById('youtube-link-horizontal').href = CONFIG.socialLinks.youtube;
-            document.getElementById('profile-image-horizontal').src = CONFIG.media.profileImage;
+            // Location (vertical)
+            const location = CONFIG.personal.location || {};
+            document.getElementById('location-text-vertical').textContent = location.name || '';
+            document.getElementById('location-icon-vertical').className = location.icon || 'ri-map-pin-line';
 
             document.getElementById('album-cover').src = CONFIG.media.albumCover;
             document.getElementById('song-title').textContent = CONFIG.music.songTitle;
             document.getElementById('total-time').textContent = formatTime(CONFIG.music.duration);
+
+            // Render social links only for vertical card
+            function renderSocialLinks(containerId) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                CONFIG.socialLinks.forEach(link => {
+                    const a = document.createElement('a');
+                    a.href = link.url;
+                    a.target = '_blank';
+                    a.className = 'social-icon w-10 h-10 flex items-center justify-center rounded-full overflow-hidden';
+                    // Icon as image
+                    const img = document.createElement('img');
+                    img.src = link.photo;
+                    img.alt = link.name;
+                    img.className = 'w-full h-full object-cover';
+                    a.appendChild(img);
+                    container.appendChild(a);
+                });
+            }
+            renderSocialLinks('social-links-vertical');
+
+            // Badge'leri render et
+            function renderBadges(containerId) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                if (CONFIG.badges && CONFIG.badges.length > 0) {
+                    CONFIG.badges.forEach(badge => {
+                        const img = document.createElement('img');
+                        img.src = badge.photo;
+                        img.alt = badge.name;
+                        img.className = 'w-full h-full object-cover';
+                        container.appendChild(img);
+                    });
+                }
+            }
+            renderBadges('badge-list');
         }
 
         // Initialize media based on config
@@ -635,13 +620,11 @@
         function initTypewriterEffect() {
             const text = CONFIG.personal.description;
             const elVertical = document.getElementById("typewriter-vertical");
-            const elHorizontal = document.getElementById("typewriter-horizontal");
             let i = 0;
             let forward = true;
 
             function animate() {
                 elVertical.textContent = text.slice(0, i) + "|";
-                elHorizontal.textContent = text.slice(0, i) + "|";
                 if (forward) {
                     if (i < text.length) {
                         i++;
@@ -662,7 +645,6 @@
                 setTimeout(animate, 150);
             }
             elVertical.textContent = "|";
-            elHorizontal.textContent = "|";
             setTimeout(animate, 800);
         }
 
