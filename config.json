@@ -46,7 +46,9 @@
     }
   ],
   "badges": [
-  { "photo": "https://cdn.discordapp.com/badge-icons/0d61871f72bb9a33a7ae568c1fb4f20a.png", "name": "Nitro" }
+  { "photo": "badges/nitro.webp", "name": "Nitro" },
+  { "photo": "badges/boost.webp", "name": "Nitro" },
+  { "photo": "badges/staff.webp", "name": "Nitro" }
   ],
   "music": {
     "songTitle": "California Dreamin",

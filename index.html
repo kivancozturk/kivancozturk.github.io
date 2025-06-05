@@ -295,6 +295,28 @@
         .glow-red {
             animation: softGlowRed 1.5s ease-in-out infinite;
         }
+
+        .badge-box {
+            position: absolute;
+            bottom: 18px;
+            right: -126px;
+            background: rgba(0,0,0,0.2);
+            border: 1.5px solid #383838;
+            border-radius: 12px;
+            padding: 4px 12px;
+            min-height: 40px;
+            min-width: 28px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            z-index: 10;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+        }
+        .badge-box img {
+            width: 24px;
+            height: 24px;
+        }
+        
     </style>
 </head>
 
@@ -358,10 +380,12 @@
                         <div class="w-28 h-28 rounded-full overflow-hidden mb-4 -4">
                             <img id="profile-image-vertical" alt="Profile" class="w-full h-full object-cover">
                             <img id="profile-decoration-vertical" alt="Profile Decoration" class="absolute inset-0 w-full h-full object-cover pointer-events-none" style="display: none; top: -10px;" />
+                            <div id="online-status-vertical"
+                                class="absolute bottom-3 right-3 w-4 h-4 bg-green-500 rounded-full"></div>
+                            <div id="badge-list" class="badge-box flex items-center gap-1"></div>
                         </div>
-                        <div id="online-status-vertical"
-                            class="absolute bottom-5 right-4 w-4 h-4 bg-green-500 rounded-full"></div>
                     </div>
+                    
                     <div class="relative inline-block">
                         <img src="videos/sparkle.gif" class="absolute inset-0 w-full h-full object-cover z-0 rounded"
                             alt="sparkle bg">
