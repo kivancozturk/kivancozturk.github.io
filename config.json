@@ -1,0 +1,35 @@
+{
+  "personal": {
+    "name": "naexy",
+    "description": "game dev",
+    "introText": "click?"
+  },
+  "media": {
+    "backgroundType": "video",
+    "backgroundVideo": "videos/video.mp4",
+    "backgroundImage": "images/background.jpg",
+    "profileImage": "images/profile.png",
+    "albumCover": "images/album_cover.png"
+  },
+  "socialLinks": {
+    "discord": "https://discord.gg/YXfN5rzHQU",
+    "youtube": "https://youtube.com/@AutoBloxGames",
+    "email": "kvannoss@gmail.com"
+  },
+  "music": {
+    "songTitle": "California Dreamin",
+    "songUrl": "songs/song.mp3",
+    "duration": 154
+  },
+  "effects": {
+    "snowEffect": true,
+    "card3D": true,
+    "cursorFollower": true,
+    "starsAnimation": true,
+    "musicVisualizer": true
+  },
+  "ui": {
+    "viewCount": 852,
+    "onlineStatus": false
+  }
+}

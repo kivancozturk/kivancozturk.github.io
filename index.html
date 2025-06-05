@@ -46,20 +46,14 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            /* dikey ortalama */
-
             font-size: 2rem;
             font-weight: bold;
             color: white;
             text-align: center;
             animation: pulse 2s ease-in-out infinite;
-
             z-index: 1000;
-            /* diğer öğelerin üstünde olsun */
             pointer-events: none;
-            /* tıklamayı engellemesin */
         }
-
 
         @keyframes pulse {
 
@@ -269,22 +263,36 @@
             }
         }
 
-        @keyframes softGlow {
+        @keyframes softGlowGreen {
 
             0%,
             100% {
                 box-shadow: 0 0 4px 2px rgba(34, 197, 94, 0.5);
-                /* hafif glow */
             }
 
             50% {
                 box-shadow: 0 0 8px 4px rgba(34, 197, 94, 0.8);
-                /* biraz daha parlak */
             }
         }
 
-        .yanip-sonen-glow {
-            animation: softGlow 3s ease-in-out infinite;
+        @keyframes softGlowRed {
+
+            0%,
+            100% {
+                box-shadow: 0 0 4px 2px rgba(239, 68, 68, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 8px 4px rgba(239, 68, 68, 0.8);
+            }
+        }
+
+        .glow-green {
+            animation: softGlowGreen 1.5s ease-in-out infinite;
+        }
+
+        .glow-red {
+            animation: softGlowRed 1.5s ease-in-out infinite;
         }
     </style>
 </head>
@@ -293,7 +301,7 @@
     <!-- Intro Screen -->
     <div class="intro-screen" id="intro-screen">
         <div class="container"></div>
-        <div class="intro-text">Click to enter</div>
+        <div class="intro-text" id="intro-text">Click to enter</div>
     </div>
 
     <!-- Main Content -->
@@ -301,9 +309,10 @@
         <!-- Snow Container -->
         <div id="snow-container"></div>
 
+        <!-- Cursor Follower -->
         <div class="cursor-follower" id="cursorFollower"></div>
 
-
+        <!-- Background -->
         <div class="video-background">
             <video id="background-video" class="absolute inset-0 w-full h-full object-cover" autoplay muted loop
                 playsinline style="display: none;">
@@ -337,23 +346,20 @@
                 <div class="profile-card rounded-lg p-8 flex flex-col items-center" id="profile-card">
                     <div class="relative">
                         <div class="w-28 h-28 rounded-full overflow-hidden mb-4">
-                            <img id="profile-image" alt="Profile" class="w-full h-full object-cover"
-                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face">
+                            <img id="profile-image" alt="Profile" class="w-full h-full object-cover">
                         </div>
-                        <div
-                            class="absolute bottom-5 right-4 w-4 h-4 bg-green-500 rounded-full yanip-sonen-glow">
+                        <div id="online-status" class="absolute bottom-5 right-4 w-4 h-4 bg-green-500 rounded-full">
                         </div>
-
                     </div>
 
                     <div class="relative inline-block">
                         <img src="videos/sparkle.gif" class="absolute inset-0 w-full h-full object-cover z-0 rounded"
                             alt="sparkle bg">
-                        <h1 class="relative text-2xl font-semibold text-white mb-1 z-10 px-2">naexy</h1>
+                        <h1 id="profile-name" class="relative text-2xl font-semibold text-white mb-1 z-10 px-2">naexy
+                        </h1>
                     </div>
 
                     <p id="typewriter" class="text-gray-300 mb-6 font-mono whitespace-pre"></p>
-
 
                     <div class="flex gap-4 mb-6">
                         <a id="discord-link"
@@ -374,7 +380,7 @@
                         <div class="w-4 h-4 flex items-center justify-center mr-1">
                             <i class="ri-eye-line"></i>
                         </div>
-                        <span>832</span>
+                        <span id="view-count">832</span>
                     </div>
                 </div>
 
@@ -385,15 +391,15 @@
                             <img id="album-cover" alt="Album Cover" class="w-full h-full object-cover">
                         </div>
                         <div class="flex-grow">
-                            <h3 class="text-white text-sm font-medium" id="song-title">Return Of The Tres</h3>
+                            <h3 class="text-white text-sm font-medium" id="song-title">Song Title</h3>
                             <div class="flex justify-between text-xs text-gray-400 mt-1">
-                                <span id="current-time">0:16</span>
-                                <span id="total-time">4:14</span>
+                                <span id="current-time">0:00</span>
+                                <span id="total-time">0:00</span>
                             </div>
                         </div>
                     </div>
 
-                    <input type="range" class="progress-bar mb-3" min="0" max="100" value="6" id="progress-bar">
+                    <input type="range" class="progress-bar mb-3" min="0" max="100" value="0" id="progress-bar">
 
                     <div class="player-controls flex justify-center gap-6">
                         <button class="w-8 h-8 flex items-center justify-center text-white" id="prev-btn">
@@ -414,77 +420,149 @@
     <!-- Hidden Audio Element -->
     <audio id="audio-player" preload="auto"></audio>
 
-    <script id="config-variables">
-        // Konfigürasyon Değişkenleri
-        const CONFIG = {
-            // Görseller ve Video
-            media: {
-                backgroundType: 'video', // 'image' veya 'video'
-                backgroundVideo: 'videos/video.mp4',
-                backgroundImage: 'images/background.jpg', // video yoksa fallback
-                profileImage: 'images/profile.png',
-                albumCover: 'images/album_cover.png'
-            },
+    <script>
+        // Global configuration object
+        let CONFIG = {};
 
-            // Sosyal Medya Bağlantıları
-            socialLinks: {
-                discord: 'https://discord.gg/YXfN5rzHQU',
-                youtube: 'https://youtube.com/@AutoBloxGames',
-                email: 'kvannoss@gmail.com'
-            },
-
-            // Müzik
-            music: {
-                songTitle: 'California Dreamin',
-                songUrl: 'songs/song.mp3',
-                duration: 154 // saniye cinsinden (4:14)
+        // Load configuration from config.json
+        async function loadConfig() {
+            try {
+                const response = await fetch('config.json');
+                CONFIG = await response.json();
+                console.log('Configuration loaded:', CONFIG);
+                return true;
             }
-        };
-    </script>
+            catch (error) {
+                console.error('Failed to load config.json:', error);
+                return false;
+            }
+        }
 
-    <script id="intro-screen-handler">
+        // Initialize intro screen
         function initIntroScreen() {
             const introScreen = document.getElementById('intro-screen');
+            const introText = document.getElementById('intro-text');
             const mainContent = document.getElementById('main-content');
 
+            // Set intro text from config
+            introText.textContent = CONFIG.personal.introText;
+
             introScreen.addEventListener('click', function () {
-                // Intro screen'i kaldır
                 introScreen.style.opacity = '0';
                 setTimeout(() => {
                     introScreen.style.display = 'none';
                     mainContent.classList.add('active');
-                    // Sayfa yüklendikten sonra efektleri başlat
                     initializeMainContent();
-                    TypeeFFECT();
-                    // Şarkıyı otomatik başlat
-                    setTimeout(() => {
-                        if (audioPlayer) {
-                            playAudio();
-                        }
-                    }, 1000);
+                    if (CONFIG.effects.musicVisualizer) {
+                        setTimeout(() => {
+                            if (audioPlayer) {
+                                playAudio();
+                            }
+                        }, 1000);
+                    }
                 }, 500);
             });
         }
 
+        // Initialize main content based on config
         function initializeMainContent() {
-            // Efektleri başlat
-            animate();
-            createSnowEffect();
-            createStarsAnimation();
-            init3DCardEffect();
-            initAudioSystem();
+            setupUI();
             initializeMedia();
-        }
-    </script>
+            initAudioSystem();
 
-    <script id="type-effect">
-        function TypeeFFECT() {
-            const text = "game dev";
+            // Initialize effects based on config
+            if (CONFIG.effects.cursorFollower) {
+                initCursorFollower();
+            }
+
+            if (CONFIG.effects.snowEffect) {
+                createSnowEffect();
+            }
+
+            if (CONFIG.effects.starsAnimation) {
+                createStarsAnimation();
+            }
+
+            if (CONFIG.effects.card3D) {
+                init3DCardEffect();
+            }
+
+            initTypewriterEffect();
+        }
+
+        // Setup UI elements with config values
+        function setupUI() {
+            document.getElementById('profile-name').textContent = CONFIG.personal.name;
+            document.getElementById('view-count').textContent = CONFIG.ui.viewCount;
+
+            const onlineStatus = document.getElementById('online-status');
+
+            if (CONFIG.ui.onlineStatus) {
+                onlineStatus.style.backgroundColor = 'rgb(34 197 94)'; // yeşil
+                onlineStatus.classList.add('glow-green');
+                onlineStatus.classList.remove('glow-red');
+            } else {
+                onlineStatus.style.backgroundColor = 'rgb(239 68 68)'; // kırmızı
+                onlineStatus.classList.remove('glow-green');
+            }
+
+
+            // Set social links
+            const emailLink = document.getElementById('email-link');
+            if (CONFIG.socialLinks.email.startsWith('mailto:')) {
+                emailLink.href = CONFIG.socialLinks.email;
+            } else {
+                emailLink.href = 'mailto:' + CONFIG.socialLinks.email;
+            }
+
+            document.getElementById('discord-link').href = CONFIG.socialLinks.discord;
+            document.getElementById('youtube-link').href = CONFIG.socialLinks.youtube;
+
+            document.getElementById('song-title').textContent = CONFIG.music.songTitle;
+            document.getElementById('total-time').textContent = formatTime(CONFIG.music.duration);
+        }
+
+        // Initialize media based on config
+        function initializeMedia() {
+            const backgroundVideo = document.getElementById('background-video');
+            const backgroundImage = document.getElementById('background-image');
+
+            if (CONFIG.media.backgroundType === 'video') {
+                backgroundVideo.querySelector('source').src = CONFIG.media.backgroundVideo;
+                backgroundVideo.load();
+
+                backgroundVideo.addEventListener('loadeddata', () => {
+                    backgroundVideo.style.display = 'block';
+                    backgroundImage.style.display = 'none';
+                });
+
+                backgroundVideo.addEventListener('error', () => {
+                    backgroundVideo.style.display = 'none';
+                    backgroundImage.style.backgroundImage = `url('${CONFIG.media.backgroundImage}')`;
+                    backgroundImage.style.display = 'block';
+                });
+
+                backgroundVideo.addEventListener('canplay', () => {
+                    backgroundVideo.play().catch(e => console.log('Video autoplay failed:', e));
+                });
+            } else {
+                backgroundVideo.style.display = 'none';
+                backgroundImage.style.backgroundImage = `url('${CONFIG.media.backgroundImage}')`;
+                backgroundImage.style.display = 'block';
+            }
+
+            document.getElementById('profile-image').src = CONFIG.media.profileImage;
+            document.getElementById('album-cover').src = CONFIG.media.albumCover;
+        }
+
+        // Typewriter effect
+        function initTypewriterEffect() {
+            const text = CONFIG.personal.description;
             const el = document.getElementById("typewriter");
             let i = 0;
             let forward = true;
-            el.textContent = "|";
 
+            el.textContent = "|";
             setTimeout(animate, 800);
 
             function animate() {
@@ -495,7 +573,7 @@
                         i++;
                     } else {
                         forward = false;
-                        setTimeout(animate, 800); // Bekleme süresi tam yazınca
+                        setTimeout(animate, 800);
                         return;
                     }
                 } else {
@@ -503,18 +581,15 @@
                         i--;
                     } else {
                         forward = true;
-                        setTimeout(animate, 500); // Bekleme süresi silinince
+                        setTimeout(animate, 500);
                         return;
                     }
                 }
-
-                setTimeout(animate, 150); // Yazma/silme hızı
+                setTimeout(animate, 150);
             }
         }
-    </script>
 
-
-    <script id="snow-effect">
+        // Snow effect
         function createSnowEffect() {
             const snowContainer = document.getElementById('snow-container');
             const snowflakes = ['❄', '❅', '❆'];
@@ -537,9 +612,8 @@
 
             setInterval(createSnowflake, 300);
         }
-    </script>
 
-    <script id="3d-card-effect">
+        // 3D card effect
         function init3DCardEffect() {
             const cardGroup = document.getElementById('card-group');
 
@@ -551,16 +625,13 @@
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
 
-                // Normalize -1 ile 1 arasında
                 const percentX = (x - centerX) / centerX;
                 const percentY = (y - centerY) / centerY;
 
-                // Etkiyi artırmak için multiplier
-                const rotateY = percentX * 12; // sola-sağa dönüş
-                const rotateX = -percentY * 12; // yukarı-aşağı dönüş (negatif çünkü doğal his için ters)
+                const rotateY = percentX * 12;
+                const rotateX = -percentY * 12;
 
-                const transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                cardGroup.style.transform = transform;
+                cardGroup.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             });
 
             cardGroup.addEventListener('mouseleave', () => {
@@ -568,15 +639,61 @@
             });
         }
 
-        window.addEventListener('DOMContentLoaded', init3DCardEffect);
-    </script>
+        // Cursor follower
+        function initCursorFollower() {
+            const cursorFollower = document.getElementById('cursorFollower');
+            let mouseX = 0;
+            let mouseY = 0;
+            let followerX = 0;
+            let followerY = 0;
 
+            cursorFollower.style.display = 'block';
 
-    <script id="audio-system">
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animate() {
+                const speed = 0.08;
+                followerX += (mouseX - followerX) * speed;
+                followerY += (mouseY - followerY) * speed;
+
+                cursorFollower.style.left = followerX - 20 + 'px';
+                cursorFollower.style.top = followerY - 20 + 'px';
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // Stars animation
+        function createStarsAnimation() {
+            const starsContainer = document.getElementById('stars-container');
+            const starsCount = 20;
+
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const size = Math.random() * 3 + 1;
+                const delay = Math.random() * 4;
+
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Audio system
         let audioPlayer;
         let isPlaying = false;
-        let autoPlayAttempted = false;
-        let userHasInteracted = false;
 
         function initAudioSystem() {
             audioPlayer = document.getElementById('audio-player');
@@ -590,7 +707,6 @@
             audioPlayer.volume = 0.5;
 
             playPauseBtn.addEventListener('click', () => {
-                userHasInteracted = true;
                 if (isPlaying) {
                     pauseAudio();
                 } else {
@@ -617,10 +733,8 @@
                 }
             });
 
-            function formatTime(seconds) {
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            if (!CONFIG.effects.musicVisualizer) {
+                visualizer.style.display = 'none';
             }
         }
 
@@ -631,7 +745,9 @@
                     const playPauseBtn = document.getElementById('play-pause-btn');
                     const visualizer = document.getElementById('visualizer');
                     playPauseBtn.innerHTML = '<i class="ri-pause-line ri-lg"></i>';
-                    visualizer.style.display = 'flex';
+                    if (CONFIG.effects.musicVisualizer) {
+                        visualizer.style.display = 'flex';
+                    }
                 }).catch(e => {
                     console.log('Audio play failed:', e);
                 });
@@ -649,115 +765,15 @@
             }
         }
 
-        const cursorFollower = document.getElementById('cursorFollower');
-        let mouseX = 0;
-        let mouseY = 0;
-        let followerX = 0;
-        let followerY = 0;
-
-        // Mouse pozisyonunu takip et
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-        });
-
-        // Yumuşak takip animasyonu
-        function animate() {
-            const speed = 0.08; // Takip hızı (0.1-0.3 arası ideal)
-            followerX += (mouseX - followerX) * speed;
-            followerY += (mouseY - followerY) * speed;
-
-            cursorFollower.style.left = followerX - 20 + 'px';
-            cursorFollower.style.top = followerY - 20 + 'px';
-
-            requestAnimationFrame(animate);
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
         }
 
-        animate();
-
-
-    </script>
-
-    <script id="stars-animation">
-        function createStarsAnimation() {
-            const starsContainer = document.getElementById('stars-container');
-            const starsCount = 20;
-
-            for (let i = 0; i < starsCount; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-
-                const posX = Math.random() * 100;
-                const posY = Math.random() * 100;
-                const size = Math.random() * 3 + 1;
-                const delay = Math.random() * 4;
-
-                star.style.left = `${posX}%`;
-                star.style.top = `${posY}%`;
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.animationDelay = `${delay}s`;
-
-                starsContainer.appendChild(star);
-            }
-        }
-    </script>
-
-    <script id="media-initialization">
-        function initializeMedia() {
-            // Medya yükleme (Video veya Image)
-            const backgroundVideo = document.getElementById('background-video');
-            const backgroundImage = document.getElementById('background-image');
-
-            if (CONFIG.media.backgroundType === 'video') {
-                // Video yükle
-                backgroundVideo.querySelector('source').src = CONFIG.media.backgroundVideo;
-                backgroundVideo.load();
-
-                backgroundVideo.addEventListener('loadeddata', () => {
-                    backgroundVideo.style.display = 'block';
-                    backgroundImage.style.display = 'none';
-                    console.log('Video loaded successfully');
-                });
-
-                backgroundVideo.addEventListener('error', (e) => {
-                    // Video yüklenemezse image fallback
-                    console.log('Video yüklenemedi, resim fallback kullanılıyor', e);
-                    backgroundVideo.style.display = 'none';
-                    backgroundImage.style.backgroundImage = `url('${CONFIG.media.backgroundImage}')`;
-                    backgroundImage.style.display = 'block';
-                });
-
-                // Video otomatik başlatma denemesi
-                backgroundVideo.addEventListener('canplay', () => {
-                    backgroundVideo.play().catch(e => {
-                        console.log('Video autoplay failed:', e);
-                    });
-                });
-            } else {
-                // Sadece resim kullan
-                backgroundVideo.style.display = 'none';
-                backgroundImage.style.backgroundImage = `url('${CONFIG.media.backgroundImage}')`;
-                backgroundImage.style.display = 'block';
-            }
-
-            // Diğer görselleri yükle
-            document.getElementById('profile-image').src = CONFIG.media.profileImage;
-            document.getElementById('album-cover').src = CONFIG.media.albumCover;
-
-            // Sosyal medya linklerini ayarla
-            document.getElementById('discord-link').href = CONFIG.socialLinks.discord;
-            document.getElementById('youtube-link').href = CONFIG.socialLinks.youtube;
-            document.getElementById('email-link').href = CONFIG.socialLinks.email;
-
-            // Şarkı bilgilerini ayarla
-            document.getElementById('song-title').textContent = CONFIG.music.songTitle;
-        }
-    </script>
-
-    <script id="main-initialization">
-        document.addEventListener('DOMContentLoaded', function () {
-            // Intro screen'i başlat
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', async function () {
+            await loadConfig();
             initIntroScreen();
         });
     </script>
