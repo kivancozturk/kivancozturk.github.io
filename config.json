@@ -9,7 +9,8 @@
     "backgroundVideo": "videos/video.mp4",
     "backgroundImage": "images/background.jpg",
     "profileImage": "images/profile.png",
-    "albumCover": "images/album_cover.png"
+    "albumCover": "images/album_cover.png",
+    "bannerImage": "images/banner.gif"
   },
   "socialLinks": {
     "discord": "https://discord.gg/YXfN5rzHQU",
@@ -31,5 +32,6 @@
   "ui": {
     "viewCount": 852,
     "onlineStatus": false
-  }
+  },
+  "profileLayout": "horizontal"
 }
