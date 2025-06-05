@@ -47,8 +47,8 @@
   ],
   "badges": [
   { "photo": "badges/nitro.webp", "name": "Nitro" },
-  { "photo": "badges/boost.webp", "name": "Nitro" },
-  { "photo": "badges/staff.webp", "name": "Nitro" }
+  { "photo": "badges/boost.webp", "name": "boost" },
+  { "photo": "badges/staff.webp", "name": "staff" }
   ],
   "music": {
     "songTitle": "California Dreamin",
