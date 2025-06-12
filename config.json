@@ -20,14 +20,9 @@
   },
   "socialLinks": [
     {
-      "name": "none",
-      "url": "none",
-      "photo": "https://media.discordapp.net/attachments/1255692212717752513/1370844483423436931/Spinning_star_thing.gif?ex=684340e9&is=6841ef69&hm=e15cd0754d128ed2adc7251d337187836f103361d3872e59b7e709eed4685656&="
-    },
-    {
       "name": "youtube",
       "url": "https://youtube.com/@AutoBloxGames",
-      "photo": "https://media.discordapp.net/attachments/1255692212717752513/1365287934751670376/youtube.png?ex=6842d079&is=68417ef9&hm=ab5cbc3ec2f98128aa9d2705d2ba9e16e8163062db62e77e3b6664a72d66eeea&=&format=webp&quality=lossless"
+      "photo": "icons/youtube.webp"
     },
     {
       "name": "discord",
@@ -37,7 +32,7 @@
     {
       "name": "email",
       "url": "mailto:kvannoss@gmail.com",
-      "photo": "https://media.discordapp.net/attachments/1255692212717752513/1365287936639373403/email.png?ex=6842d079&is=68417ef9&hm=0bae7ca903ce7bf1369a2e6f4a9f6cf0d8517757b3c05fc77a6131b563cd6159&=&format=webp&quality=lossless"
+      "photo": "icons/"
     },
     {
       "name": "none",
@@ -51,7 +46,7 @@
   { "photo": "badges/staff.webp", "name": "staff" }
   ],
   "music": {
-    "songTitle": "California Dreamin",
+    "songTitle": "Lean With it",
     "songUrl": "songs/song.mp3",
     "duration": 154
   },
@@ -70,10 +65,11 @@
     "card3D": true,
     "cursorFollower": true,
     "starsAnimation": true,
-    "musicVisualizer": true
+    "musicVisualizer": true,
+    "animateSiteTitle": true
   },
   "ui": {
-    "viewCount": 852,
+    "viewCount": 11.685,
     "onlineStatus": true
   },
   "profileLayout": "vertical"
